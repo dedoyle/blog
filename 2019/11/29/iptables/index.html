@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>iptables | 锦东</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.7b7a278e.css" as="style"><link rel="preload" href="/blog/assets/js/app.ee9076d5.js" as="script"><link rel="preload" href="/blog/assets/js/4.1fd9fb89.js" as="script"><link rel="preload" href="/blog/assets/js/13.5f28c5b8.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.b6fea33d.js"><link rel="prefetch" href="/blog/assets/js/11.6150d2c1.js"><link rel="prefetch" href="/blog/assets/js/12.1e81c02a.js"><link rel="prefetch" href="/blog/assets/js/14.0cb46798.js"><link rel="prefetch" href="/blog/assets/js/15.798e99e1.js"><link rel="prefetch" href="/blog/assets/js/16.a1f279bf.js"><link rel="prefetch" href="/blog/assets/js/17.388e4661.js"><link rel="prefetch" href="/blog/assets/js/18.b0cd002e.js"><link rel="prefetch" href="/blog/assets/js/19.fc110388.js"><link rel="prefetch" href="/blog/assets/js/20.b484802f.js"><link rel="prefetch" href="/blog/assets/js/21.a47c9341.js"><link rel="prefetch" href="/blog/assets/js/3.89ecac0a.js"><link rel="prefetch" href="/blog/assets/js/5.639dc0b6.js"><link rel="prefetch" href="/blog/assets/js/6.d1989f68.js"><link rel="prefetch" href="/blog/assets/js/7.883245fc.js"><link rel="prefetch" href="/blog/assets/js/8.e1792876.js"><link rel="prefetch" href="/blog/assets/js/9.278719cb.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.6080f9a4.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.7b7a278e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout" class="global-layout"><div class="global-header"><a href="/blog/" class="global-header-logo router-link-active">锦东</a> <a href="/blog/tag/" class="global-header-sub">标签</a></div> <section class="post-view"><div class="content__default"><h1 id="iptables"><a href="#iptables" class="header-anchor">#</a> iptables</h1> <h2 id="disable-firewalld"><a href="#disable-firewalld" class="header-anchor">#</a> Disable FirewallD</h2> <p>stop the FirewallD service:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl stop firewalld
+</code></pre></div><p>Disable the FirewallD service to start automatically on system boot:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl disable firewalld
+</code></pre></div><p>Mask the FirewallD service to prevent it from being started by another services:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl mask --now firewalld
+</code></pre></div><h2 id="install-and-enable-iptables"><a href="#install-and-enable-iptables" class="header-anchor">#</a> Install and Enable Iptables</h2> <ol><li>Run the following command to install the iptables-service package from the CentOS repositories:</li></ol> <div class="language- extra-class"><pre class="language-text"><code>  sudo yum install iptables-services
+</code></pre></div><p>Once the package is installed start the Iptables service:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl start iptables
+  sudo systemctl start iptables6
+</code></pre></div><p>Enable the Iptables service to start automatically on system boot:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl enable iptables
+  sudo systemctl enable iptables6
+</code></pre></div><p>Check the iptables service status with:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo systemctl status iptables
+  sudo systemctl status iptables6
+</code></pre></div><p>To check the current iptables rules use the following commands:</p> <div class="language- extra-class"><pre class="language-text"><code>  sudo iptables -nvL
+  sudo iptables6 -nvL
+</code></pre></div><p>By default only the SSH port 22 is open. The output should look something like this:</p> <div class="language- extra-class"><pre class="language-text"><code>  Output
+  Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+  pkts bytes target     prot opt in     out     source               destination         
+  5400 6736K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
+      0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0           
+      2   148 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+      3   180 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            state NEW tcp dpt:22
+      0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+  Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+  pkts bytes target     prot opt in     out     source               destination         
+      0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+  Chain OUTPUT (policy ACCEPT 4298 packets, 295K bytes)
+  pkts bytes target     prot opt in     out     source               destination     
+</code></pre></div><p>At this point, you have successfully enabled the iptables service and you can start building your firewall. The changes will persist after a reboot.</p> <p><a href="https://linuxize.com/post/how-to-install-iptables-on-centos-7/#prerequisites" target="_blank" rel="noopener noreferrer">how to install iptables on centos 7<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://linux.die.net/man/8/iptables" target="_blank" rel="noopener noreferrer">man page<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.jb51.net/article/94839.htm" target="_blank" rel="noopener noreferrer">阿里云linux服务器上使用iptables设置安全策略的方法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://cloud.tencent.com/developer/article/1071312" target="_blank" rel="noopener noreferrer">Linux服务器最最基本安全策略<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div></section><br></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.ee9076d5.js" defer></script><script src="/blog/assets/js/4.1fd9fb89.js" defer></script><script src="/blog/assets/js/13.5f28c5b8.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pipenv 创建虚拟环境 | 锦东</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.7b7a278e.css" as="style"><link rel="preload" href="/blog/assets/js/app.ee9076d5.js" as="script"><link rel="preload" href="/blog/assets/js/4.1fd9fb89.js" as="script"><link rel="preload" href="/blog/assets/js/16.a1f279bf.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.b6fea33d.js"><link rel="prefetch" href="/blog/assets/js/11.6150d2c1.js"><link rel="prefetch" href="/blog/assets/js/12.1e81c02a.js"><link rel="prefetch" href="/blog/assets/js/13.5f28c5b8.js"><link rel="prefetch" href="/blog/assets/js/14.0cb46798.js"><link rel="prefetch" href="/blog/assets/js/15.798e99e1.js"><link rel="prefetch" href="/blog/assets/js/17.388e4661.js"><link rel="prefetch" href="/blog/assets/js/18.b0cd002e.js"><link rel="prefetch" href="/blog/assets/js/19.fc110388.js"><link rel="prefetch" href="/blog/assets/js/20.b484802f.js"><link rel="prefetch" href="/blog/assets/js/21.a47c9341.js"><link rel="prefetch" href="/blog/assets/js/3.89ecac0a.js"><link rel="prefetch" href="/blog/assets/js/5.639dc0b6.js"><link rel="prefetch" href="/blog/assets/js/6.d1989f68.js"><link rel="prefetch" href="/blog/assets/js/7.883245fc.js"><link rel="prefetch" href="/blog/assets/js/8.e1792876.js"><link rel="prefetch" href="/blog/assets/js/9.278719cb.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.6080f9a4.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.7b7a278e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout" class="global-layout"><div class="global-header"><a href="/blog/" class="global-header-logo router-link-active">锦东</a> <a href="/blog/tag/" class="global-header-sub">标签</a></div> <section class="post-view"><div class="content__default"><h1 id="pipenv-创建虚拟环境"><a href="#pipenv-创建虚拟环境" class="header-anchor">#</a> pipenv 创建虚拟环境</h1> <p>虚拟环境是独立于 Python 全局环境的 Python 解释器环境，使用它的好处如下：</p> <ul><li>保持全局环境的干净</li> <li>指定不同的依赖版本</li> <li>方便记录和管理依赖</li></ul> <p>我们将使用 Pipenv 来创建和管理虚拟环境、以及在虚拟环境中安装和卸载依赖包。使用 Pipfile 文件记录项目依赖，使用 Pipfile.lock 文件记录固定版本的依赖列表。</p> <p>首先使用 pip 安装 Pipenv</p> <div class="language- extra-class"><pre class="language-text"><code>    pip install pipenv
+</code></pre></div><p>使用 Pipenv 创建虚拟环境非常简单，使用 pipenv install 命令即可为当前项目创建一个虚拟环境：</p> <div class="language- extra-class"><pre class="language-text"><code>    pipenv install
+</code></pre></div><p>这个命令执行的过程包含下面的行为：</p> <ul><li>为当前目录创建一个 Python 解释器环境，按照 pip、setuptool、virtualenv 等工具库。</li> <li>如果当前目录有 Pipfile 文件或 requirements.txt 文件，那么从中读取依赖列表并安装。</li> <li>如果没有发现 Pipfile 文件，就自动创建。</li></ul> <p>创建虚拟环境后，我们可以使用 pipenv shell 命令来激活虚拟环境，如下所示：</p> <div class="language- extra-class"><pre class="language-text"><code>    pipenv shell
+</code></pre></div><h2 id="安装-flask"><a href="#安装-flask" class="header-anchor">#</a> 安装 Flask</h2> <p>无论是否已经激活虚拟环境，你都可以使用下面的命令来安装 Flask：</p> <div class="language- extra-class"><pre class="language-text"><code>    pipenv install flask
+</code></pre></div><p>这会把 Flask 以及相关的一些依赖包安装到对应的虚拟环境，同时 Pipenv 会自动更新依赖文件。</p></div></section><br></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.ee9076d5.js" defer></script><script src="/blog/assets/js/4.1fd9fb89.js" defer></script><script src="/blog/assets/js/16.a1f279bf.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>阿里云服务器配置 | 锦东</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.7b7a278e.css" as="style"><link rel="preload" href="/blog/assets/js/app.ee9076d5.js" as="script"><link rel="preload" href="/blog/assets/js/4.1fd9fb89.js" as="script"><link rel="preload" href="/blog/assets/js/9.278719cb.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.b6fea33d.js"><link rel="prefetch" href="/blog/assets/js/11.6150d2c1.js"><link rel="prefetch" href="/blog/assets/js/12.1e81c02a.js"><link rel="prefetch" href="/blog/assets/js/13.5f28c5b8.js"><link rel="prefetch" href="/blog/assets/js/14.0cb46798.js"><link rel="prefetch" href="/blog/assets/js/15.798e99e1.js"><link rel="prefetch" href="/blog/assets/js/16.a1f279bf.js"><link rel="prefetch" href="/blog/assets/js/17.388e4661.js"><link rel="prefetch" href="/blog/assets/js/18.b0cd002e.js"><link rel="prefetch" href="/blog/assets/js/19.fc110388.js"><link rel="prefetch" href="/blog/assets/js/20.b484802f.js"><link rel="prefetch" href="/blog/assets/js/21.a47c9341.js"><link rel="prefetch" href="/blog/assets/js/3.89ecac0a.js"><link rel="prefetch" href="/blog/assets/js/5.639dc0b6.js"><link rel="prefetch" href="/blog/assets/js/6.d1989f68.js"><link rel="prefetch" href="/blog/assets/js/7.883245fc.js"><link rel="prefetch" href="/blog/assets/js/8.e1792876.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.6080f9a4.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.7b7a278e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout" class="global-layout"><div class="global-header"><a href="/blog/" class="global-header-logo router-link-active">锦东</a> <a href="/blog/tag/" class="global-header-sub">标签</a></div> <section class="post-view"><div class="content__default"><h1 id="阿里云服务器配置"><a href="#阿里云服务器配置" class="header-anchor">#</a> 阿里云服务器配置</h1> <h2 id="设置管理终端密码"><a href="#设置管理终端密码" class="header-anchor">#</a> 设置管理终端密码</h2> <ol><li>实例有个更多的操作，展开点击密码/密钥里的重置</li> <li>设置好密码，展开更多，点击实例状态里的重启</li></ol> <h2 id="登录管理终端"><a href="#登录管理终端" class="header-anchor">#</a> 登录管理终端</h2> <ol><li>打开远程连接</li> <li>第一次点击远程连接，会弹出远程连接密码，记住这个密码。</li> <li>输入远程连接密码，确定，进入管理终端。</li> <li>这里需要输入账号密码</li></ol> <h2 id="开启-ssh"><a href="#开启-ssh" class="header-anchor">#</a> 开启 ssh</h2> <ol><li>修改备份文件前先备份配置文件 <code>cp -a /etc/ssh/sshd_config /etc/ssh/sshd_config.bak</code></li> <li><code>vi /etc/ssh/sshd_config</code></li> <li>去掉 <code>Port 22</code> 前的 <code>#</code></li> <li>去掉 <code>PermitRootLogin yes</code> 前的 <code>#</code></li> <li><code>:wp</code> 保存退出</li> <li><code>service sshd restart</code> 重启 sshd</li></ol> <h2 id="ssh-免密登录"><a href="#ssh-免密登录" class="header-anchor">#</a> ssh 免密登录</h2> <ol><li>本地运行 <code>ssh-keygen -t rsa -f id_rsa_filename -C mail@mail.com</code></li> <li>本地运行 <code>ssh-add ~/.ssh/id_rsa_filename</code> （具体可查看《管理多个 ssh key》这部分）</li> <li>本地运行 <code>ssh-copy-id -i ~/.ssh/id_rsa_filename.pub root@server_ip</code></li> <li>本地运行 <code>ssh root@server_ip -p ssh_port</code>，即可无密码登录</li></ol> <h2 id="管理多个-ssh-key"><a href="#管理多个-ssh-key" class="header-anchor">#</a> 管理多个 ssh key</h2> <ol><li><code>cd ~/.ssh</code></li> <li><code>ls</code> 可以看到你生成了多少个 ssh key</li></ol> <h3 id="设置ssh-key的代理"><a href="#设置ssh-key的代理" class="header-anchor">#</a> 设置ssh key的代理</h3> <ol><li>查看代理  <code>ssh-add -l</code></li></ol> <ul><li>若提示 <code>Could not open a connection to your authentication agent.</code>
+则代表没任何 key，运行 <code>exec ssh-agent bash</code></li> <li>若已有 ssh key，可以选择是否删除，运行 <code>ssh-add -D</code></li></ul> <ol start="2"><li>代理中添加私钥
+默认只读取 id_rsa，为了让 SSH 识别新的私钥，需将其添加到 SSH agent 中：</li></ol> <div class="language- extra-class"><pre class="language-text"><code>  ssh-add ~/.ssh/id_rsa_gitlab
+  ssh-add ~/.ssh/id_rsa_github 
+</code></pre></div><p>查看添加的代理</p> <div class="language- extra-class"><pre class="language-text"><code>ssh-add -l
+</code></pre></div></div></section><br></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.ee9076d5.js" defer></script><script src="/blog/assets/js/4.1fd9fb89.js" defer></script><script src="/blog/assets/js/9.278719cb.js" defer></script>
+  </body>
+</html>
